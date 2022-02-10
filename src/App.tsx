@@ -8,10 +8,9 @@ function App() {
     <div className='container'>
       <h2>TODO</h2>
 
-      <AddTodo/>
+      <AddTodo />
 
-      <TodoList/>
-
+      <TodoList />
     </div>
   );
 }
