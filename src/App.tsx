@@ -23,9 +23,9 @@ function App() {
       <div className='mt-4'>
         {/* Todo item */}
         <div className='row h-100 mb-2 border border-1 rounded-3'>
-          <div className='col d-flex flex-row align-items-center'>
+          <div className='col d-flex flex-row align-items-start'>
             {/* Content */}
-            <div className='flex-grow-1'>Something in the way she moves</div>
+            <div className='flex-grow-1 align-self-center'>Something in the way she moves</div>
 
             {/* Edit */}
             <button className='btn btn-outline-primary m-1'>
@@ -33,7 +33,7 @@ function App() {
             </button>
 
             {/* Remove */}
-            <button className='btn btn-outline-primary m-1'>
+            <button className='btn btn-outline-danger m-1'>
               <FontAwesomeIcon icon={faXmark}/>
             </button>
           </div>
@@ -41,14 +41,14 @@ function App() {
 
 
         <div className='row h-100 mb-2 border border-1 rounded-3'>
-          <div className='col d-flex flex-row align-items-center'>
-            <div className='flex-grow-1'>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nam deserunt facilis incidunt consequuntur placeat repellendus dolores reprehenderit laudantium fugiat, repellat officiis, ducimus fugit totam esse sed sapiente saepe? Eligendi, minus!</div>
+          <div className='col d-flex flex-row align-items-start'>
+            <div className='flex-grow-1 align-self-center'>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nam deserunt facilis incidunt consequuntur placeat repellendus dolores reprehenderit laudantium fugiat, repellat officiis, ducimus fugit totam esse sed sapiente saepe? Eligendi, minus!</div>
 
             <button className='btn btn-outline-primary m-1'>
               <FontAwesomeIcon icon={faPen}/>
             </button>
 
-            <button className='btn btn-outline-primary m-1'>
+            <button className='btn btn-outline-danger m-1'>
               <FontAwesomeIcon icon={faXmark}/>
             </button>
           </div>
