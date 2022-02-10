@@ -3,21 +3,14 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPen, faXmark } from '@fortawesome/free-solid-svg-icons'
 
+import AddTodo from './AddTodo/AddTodo';
+
 function App() {
   return (
     <div className='container'>
       <h2>TODO</h2>
 
-      {/* Add Todo */}
-      <form className='row row-cols-lg-auto g-3 align-items-center'>
-        <div className="col-12">
-          <input type='text' className='form-control' placeholder='Note something'/>
-        </div>
-
-        <div className="col-12">
-          <button className='btn btn-primary'>Add</button>
-        </div>
-      </form>
+      <AddTodo />
 
       {/* Todo list */}
       <div className="row mt-4">
