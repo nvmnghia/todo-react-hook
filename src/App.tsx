@@ -4,13 +4,23 @@ import AddTodo from './add_todo/AddTodo';
 import Todo from './Todo';
 import TodoList from './todo_list/TodoList';
 
-class App extends React.Component {
-  todos: Todo[] = [
-    new Todo('Something in the way she moves'),
-    new Todo(
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
-    ),
-  ];
+interface AppState {
+  todos: Todo[];
+}
+
+class App extends React.Component<{}, AppState> {
+  constructor(props: {}) {
+    super(props);
+
+    this.state = {
+      todos: [
+        new Todo('Something in the way she moves'),
+        new Todo(
+          'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
+        ),
+      ],
+    };
+  }
 
   render() {
     return (
@@ -23,7 +33,7 @@ class App extends React.Component {
 
             <AddTodo />
 
-            <TodoList todos={this.todos} />
+            <TodoList todos={this.state.todos} />
           </div>
         </div>
       </div>
