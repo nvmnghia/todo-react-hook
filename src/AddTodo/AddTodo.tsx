@@ -1,6 +1,6 @@
 export default function AddTodo() {
   return (
-    <form className='row row-cols-lg-auto g-3 align-items-center'>
+    <form className='row row-cols-md-auto g-3 align-items-center'>
       <div className='col-md-auto flex-grow-1'>
         <input
           type='text'
