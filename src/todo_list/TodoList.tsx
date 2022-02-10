@@ -1,5 +1,5 @@
 import Todo from '../Todo';
-import TodoItem from './TodoItem/TodoItem';
+import TodoItem from './todo_item/TodoItem';
 
 export default function TodoList() {
   return (
