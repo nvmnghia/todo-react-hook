@@ -10,7 +10,7 @@ export default function TodoList({ todos }: TodoListProps) {
     <div className='row mt-4'>
       <div className='col'>
         {todos.map((todo) => (
-          <TodoItem todo={todo} />
+          <TodoItem todo={todo} key={todo.id} />
         ))}
       </div>
     </div>
