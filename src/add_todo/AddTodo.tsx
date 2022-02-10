@@ -1,6 +1,10 @@
+import { FormEvent } from "react";
+
 export default function AddTodo() {
+  const preventSubmit = (event: FormEvent) => event.preventDefault();
+
   return (
-    <form className='row row-cols-md-auto g-3 align-items-center'>
+    <form className='row row-cols-md-auto g-3 align-items-center' onSubmit={preventSubmit}>
       <div className='col-md-auto flex-grow-1'>
         <input
           type='text'
