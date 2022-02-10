@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPen, faXmark } from '@fortawesome/free-solid-svg-icons';
-import { Todo } from '../../Todo';
+import Todo from '../../Todo';
 
 interface TodoItemProps {
   todo: Todo;
