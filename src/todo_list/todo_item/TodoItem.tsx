@@ -4,6 +4,8 @@ import Todo from '../../Todo';
 
 interface TodoItemProps {
   todo: Todo;
+
+  remove: (id: number) => void;
 }
 
 export default function TodoItem(props: TodoItemProps) {
@@ -18,7 +20,10 @@ export default function TodoItem(props: TodoItemProps) {
       </button>
 
       {/* Remove */}
-      <button className='btn btn-outline-danger'>
+      <button
+        className='btn btn-outline-danger'
+        onClick={() => props.remove(props.todo.id)}
+      >
         <FontAwesomeIcon icon={faXmark} />
       </button>
     </div>

@@ -22,6 +22,12 @@ class App extends React.Component<{}, AppState> {
     };
   }
 
+  removeTodo(id: number) {
+    this.setState((state) => ({
+      todos: state.todos.filter((todo) => todo.id !== id),
+    }));
+  }
+
   render() {
     return (
       <div className='container'>
@@ -33,7 +39,10 @@ class App extends React.Component<{}, AppState> {
 
             <AddTodo />
 
-            <TodoList todos={this.state.todos} />
+            <TodoList
+              todos={this.state.todos}
+              remove={this.removeTodo.bind(this)}
+            />
           </div>
         </div>
       </div>
