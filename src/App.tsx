@@ -6,7 +6,9 @@ import TodoList from './TodoList/TodoList';
 function App() {
   return (
     <div className='container'>
-      <h2>TODO</h2>
+      <div className='row mt-4'>
+        <h2>TODO</h2>
+      </div>
 
       <AddTodo />
 
