@@ -1,34 +1,13 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPen, faXmark } from '@fortawesome/free-solid-svg-icons'
+import { Todo } from "../Todo";
+import TodoItem from "./TodoItem/TodoItem"
 
 export default function TodoList() {
   return (
     <div className="row mt-4">
       <div className="col">
-        <div className='d-flex align-items-start gap-2 p-2 mb-2 border border-1 rounded-3'>
-          {/* Content */}
-          <div className='flex-grow-1 align-self-center'>Something in the way she moves</div>
+        <TodoItem todo={new Todo('Something in the way she moves')} />
 
-          {/* Edit */}
-          <button className='btn btn-outline-primary'>
-            <FontAwesomeIcon icon={faPen}/>
-          </button>
-
-          {/* Remove */}
-          <button className='btn btn-outline-danger'>
-            <FontAwesomeIcon icon={faXmark}/>
-          </button>
-        </div>
-
-        <div className='d-flex align-items-start gap-2 p-2 mb-2 border border-1 rounded-3'>
-          <div className='flex-grow-1 align-self-center'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Obcaecati quo est optio necessitatibus! At nam animi vel hic perferendis vero culpa corporis autem dolorum iste. Fuga, quisquam at. Quae, ipsum!</div>
-          <button className='btn btn-outline-primary'>
-            <FontAwesomeIcon icon={faPen}/>
-          </button>
-          <button className='btn btn-outline-danger'>
-            <FontAwesomeIcon icon={faXmark}/>
-          </button>
-        </div>
+        <TodoItem todo={new Todo('Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.')}/>
       </div>
     </div>
   );
