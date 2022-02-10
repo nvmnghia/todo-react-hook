@@ -10,7 +10,7 @@ export default function AddTodo() {
       </div>
 
       <div className='col-md-auto col-xs-12'>
-        <button className='btn btn-primary'>Add</button>
+        <button className='btn btn-primary w-100'>Add</button>
       </div>
     </form>
   );
