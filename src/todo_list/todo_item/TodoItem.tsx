@@ -9,9 +9,9 @@ import Todo from '../../Todo';
 // Content box
 //================================================================================
 
-const ShowTodo = ({ content }: { content: string }) => <>{content}</>;
+const TodoContent = ({ content }: { content: string }) => <>{content}</>;
 
-const EditTodo = ({ content }: { content: string }) => (
+const TodoEditor = ({ content }: { content: string }) => (
   <textarea className='w-100' defaultValue={content}></textarea>
 );
 
@@ -78,9 +78,9 @@ export default class TodoItem extends React.Component<
 
   render() {
     const contentBox = this.state.editing ? (
-      <EditTodo content={this.props.todo.content} />
+      <TodoEditor content={this.props.todo.content} />
     ) : (
-      <ShowTodo content={this.props.todo.content} />
+      <TodoContent content={this.props.todo.content} />
     );
 
     const editOrSaveButton = this.state.editing ? (
