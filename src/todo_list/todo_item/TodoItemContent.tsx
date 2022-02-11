@@ -4,6 +4,7 @@ const TodoContent = ({ content }: { content: string }) => <>{content}</>;
 
 interface TodoEditorProps {
   content: string;
+  save: (content: string) => void;
 }
 
 interface TodoEditorState {
@@ -23,6 +24,7 @@ class TodoEditor extends React.Component<TodoEditorProps, TodoEditorState> {
 
   handleChange({ target: { value } }: ChangeEvent<HTMLTextAreaElement>) {
     this.setState({ content: value });
+    this.props.save(value);
   }
 
   render(): React.ReactNode {

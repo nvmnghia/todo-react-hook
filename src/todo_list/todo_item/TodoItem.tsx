@@ -14,6 +14,7 @@ interface TodoItemProps {
   // Currently, this remove can remove ANY todo
   // TODO: Should this be curried to remove only this particular todo?
   remove: (id: number) => void;
+  edit: (id: number, content: string) => void;
 }
 
 interface TodoItemState {
@@ -33,6 +34,7 @@ export default class TodoItem extends React.Component<
 
     this.toggleEditingState = this.toggleEditingState.bind(this);
     this.remove = this.remove.bind(this);
+    this.save = this.save.bind(this);
   }
 
   toggleEditingState() {
@@ -43,9 +45,13 @@ export default class TodoItem extends React.Component<
     this.props.remove(this.props.todo.id);
   }
 
+  save(content: string) {
+    this.props.edit(this.props.todo.id, content);
+  }
+
   render() {
     const contentBox = this.state.editing ? (
-      <TodoEditor content={this.props.todo.content} />
+      <TodoEditor content={this.props.todo.content} save={this.save} />
     ) : (
       <TodoContent content={this.props.todo.content} />
     );

@@ -28,6 +28,14 @@ class App extends React.Component<{}, AppState> {
     }));
   }
 
+  editTodo(id: number, content: string) {
+    this.setState((state) => ({
+      todos: state.todos.map((todo) =>
+        todo.id === id ? { ...todo, content } : todo
+      ),
+    }));
+  }
+
   render() {
     return (
       <div className='container'>
@@ -42,6 +50,7 @@ class App extends React.Component<{}, AppState> {
             <TodoList
               todos={this.state.todos}
               remove={this.removeTodo.bind(this)}
+              edit={this.editTodo.bind(this)}
             />
           </div>
         </div>
