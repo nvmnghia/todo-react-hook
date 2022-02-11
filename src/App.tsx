@@ -20,6 +20,10 @@ class App extends React.Component<{}, AppState> {
         ),
       ],
     };
+
+    this.addTodo = this.addTodo.bind(this);
+    this.editTodo = this.editTodo.bind(this);
+    this.removeTodo = this.removeTodo.bind(this);
   }
 
   addTodo(content: string) {
@@ -51,12 +55,12 @@ class App extends React.Component<{}, AppState> {
               <h2>TODO</h2>
             </div>
 
-            <AddTodo add={this.addTodo.bind(this)} />
+            <AddTodo add={this.addTodo} />
 
             <TodoList
               todos={this.state.todos}
-              remove={this.removeTodo.bind(this)}
-              edit={this.editTodo.bind(this)}
+              remove={this.removeTodo}
+              edit={this.editTodo}
             />
           </div>
         </div>
