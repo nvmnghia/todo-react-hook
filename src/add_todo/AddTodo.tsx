@@ -1,11 +1,18 @@
 import React, { ChangeEvent, FormEvent } from 'react';
 
+interface AddTodoProps {
+  add: (content: string) => void;
+}
+
 interface AddTodoState {
   content: string;
 }
 
-export default class AddTodo extends React.Component<{}, AddTodoState> {
-  constructor(props: {}) {
+export default class AddTodo extends React.Component<
+  AddTodoProps,
+  AddTodoState
+> {
+  constructor(props: AddTodoProps) {
     super(props);
 
     this.state = {
@@ -22,6 +29,7 @@ export default class AddTodo extends React.Component<{}, AddTodoState> {
 
   handleSubmit(event: FormEvent) {
     event.preventDefault();
+    this.props.add(this.state.content);
   }
 
   render() {

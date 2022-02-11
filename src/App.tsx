@@ -22,6 +22,12 @@ class App extends React.Component<{}, AppState> {
     };
   }
 
+  addTodo(content: string) {
+    this.setState((state) => ({
+      todos: [...state.todos, new Todo(content)],
+    }));
+  }
+
   removeTodo(id: number) {
     this.setState((state) => ({
       todos: state.todos.filter((todo) => todo.id !== id),
@@ -45,7 +51,7 @@ class App extends React.Component<{}, AppState> {
               <h2>TODO</h2>
             </div>
 
-            <AddTodo />
+            <AddTodo add={this.addTodo.bind(this)} />
 
             <TodoList
               todos={this.state.todos}
