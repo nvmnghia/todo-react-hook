@@ -1,41 +1,8 @@
 import React from 'react';
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCheck, faPen, faXmark } from '@fortawesome/free-solid-svg-icons';
-
 import Todo from '../../Todo';
-
-//================================================================================
-// Content box
-//================================================================================
-
-const TodoContent = ({ content }: { content: string }) => <>{content}</>;
-
-const TodoEditor = ({ content }: { content: string }) => (
-  <textarea className='w-100' defaultValue={content}></textarea>
-);
-
-//================================================================================
-// Buttons
-//================================================================================
-
-const EditButton = ({ onStartEdit }: { onStartEdit: () => void }) => (
-  <button className='btn btn-outline-primary' onClick={onStartEdit}>
-    <FontAwesomeIcon icon={faPen} />
-  </button>
-);
-
-const SaveButton = ({ onSave }: { onSave: () => void }) => (
-  <button className='btn btn-outline-primary' onClick={onSave}>
-    <FontAwesomeIcon icon={faCheck} />
-  </button>
-);
-
-const RemoveButton = ({ onRemove }: { onRemove: () => void }) => (
-  <button className='btn btn-outline-danger' onClick={onRemove}>
-    <FontAwesomeIcon icon={faXmark} />
-  </button>
-);
+import { EditButton, RemoveButton, SaveButton } from './TodoItemButtons';
+import { TodoContent, TodoEditor } from './TodoItemContent';
 
 //================================================================================
 // Todo item
