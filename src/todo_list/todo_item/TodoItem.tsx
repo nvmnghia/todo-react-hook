@@ -1,10 +1,45 @@
 import React from 'react';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faXmark } from '@fortawesome/free-solid-svg-icons';
+import { faCheck, faPen, faXmark } from '@fortawesome/free-solid-svg-icons';
 
 import Todo from '../../Todo';
-import EditSaveComboButton from './EditSaveComboButton';
+
+//================================================================================
+// Content box
+//================================================================================
+
+const ShowTodo = ({ content }: { content: string }) => <>{content}</>;
+
+const EditTodo = ({ content }: { content: string }) => (
+  <textarea className='w-100' defaultValue={content}></textarea>
+);
+
+//================================================================================
+// Buttons
+//================================================================================
+
+const EditButton = ({ onStartEdit }: { onStartEdit: () => void }) => (
+  <button className='btn btn-outline-primary' onClick={onStartEdit}>
+    <FontAwesomeIcon icon={faPen} />
+  </button>
+);
+
+const SaveButton = ({ onSave }: { onSave: () => void }) => (
+  <button className='btn btn-outline-primary' onClick={onSave}>
+    <FontAwesomeIcon icon={faCheck} />
+  </button>
+);
+
+const DeleteButton = ({ onDelete }: { onDelete: () => void }) => (
+  <button className='btn btn-outline-danger' onClick={onDelete}>
+    <FontAwesomeIcon icon={faXmark} />
+  </button>
+);
+
+//================================================================================
+// Todo item
+//================================================================================
 
 interface TodoItemProps {
   todo: Todo;
@@ -16,12 +51,6 @@ interface TodoItemState {
   editing: boolean;
 }
 
-const showTodo = (content: string) => <>{content}</>;
-
-const editTodo = (content: string) => (
-  <textarea className='w-100' defaultValue={content}></textarea>
-);
-
 export default class TodoItem extends React.Component<
   TodoItemProps,
   TodoItemState
@@ -32,29 +61,34 @@ export default class TodoItem extends React.Component<
     this.state = {
       editing: false,
     };
+
+    this.toggleEditingState = this.toggleEditingState.bind(this);
+  }
+
+  toggleEditingState() {
+    this.setState((state) => ({ editing: !state.editing }));
   }
 
   render() {
-    const contentBox = this.state.editing
-      ? editTodo(this.props.todo.content)
-      : showTodo(this.props.todo.content);
+    const contentBox = this.state.editing ? (
+      <EditTodo content={this.props.todo.content} />
+    ) : (
+      <ShowTodo content={this.props.todo.content} />
+    );
+
+    const editOrSaveButton = this.state.editing ? (
+      <SaveButton onSave={this.toggleEditingState} />
+    ) : (
+      <EditButton onStartEdit={this.toggleEditingState} />
+    );
 
     return (
       <div className='d-flex align-items-start gap-2 p-2 mb-2 border border-1 rounded-3'>
         <div className='flex-grow-1 align-self-center'>{contentBox}</div>
 
-        <EditSaveComboButton
-          onStartEdit={() => this.setState({ editing: true })}
-          onSave={() => this.setState({ editing: false })}
-        />
+        {editOrSaveButton}
 
-        {/* Remove */}
-        <button
-          className='btn btn-outline-danger'
-          onClick={() => this.props.remove(this.props.todo.id)}
-        >
-          <FontAwesomeIcon icon={faXmark} />
-        </button>
+        <DeleteButton onDelete={() => this.props.remove(this.props.todo.id)} />
       </div>
     );
   }
