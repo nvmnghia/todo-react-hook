@@ -31,8 +31,8 @@ const SaveButton = ({ onSave }: { onSave: () => void }) => (
   </button>
 );
 
-const DeleteButton = ({ onDelete }: { onDelete: () => void }) => (
-  <button className='btn btn-outline-danger' onClick={onDelete}>
+const RemoveButton = ({ onRemove }: { onRemove: () => void }) => (
+  <button className='btn btn-outline-danger' onClick={onRemove}>
     <FontAwesomeIcon icon={faXmark} />
   </button>
 );
@@ -44,6 +44,8 @@ const DeleteButton = ({ onDelete }: { onDelete: () => void }) => (
 interface TodoItemProps {
   todo: Todo;
 
+  // Currently, this remove can remove ANY todo
+  // TODO: Should this be curried to remove only this particular todo?
   remove: (id: number) => void;
 }
 
@@ -63,10 +65,15 @@ export default class TodoItem extends React.Component<
     };
 
     this.toggleEditingState = this.toggleEditingState.bind(this);
+    this.remove = this.remove.bind(this);
   }
 
   toggleEditingState() {
     this.setState((state) => ({ editing: !state.editing }));
+  }
+
+  remove() {
+    this.props.remove(this.props.todo.id);
   }
 
   render() {
@@ -88,7 +95,7 @@ export default class TodoItem extends React.Component<
 
         {editOrSaveButton}
 
-        <DeleteButton onDelete={() => this.props.remove(this.props.todo.id)} />
+        <RemoveButton onRemove={this.remove} />
       </div>
     );
   }
