@@ -30,6 +30,7 @@ export default class AddTodo extends React.Component<
   handleSubmit(event: FormEvent) {
     event.preventDefault();
     this.props.add(this.state.content);
+    this.setState({ content: '' });
   }
 
   render() {
