@@ -1,5 +1,5 @@
 export default class Todo {
-  private static counter: number = 1;
+  private static counter = 1;
 
   content: string;
   date: Date;

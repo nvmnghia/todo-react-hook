@@ -8,8 +8,8 @@ interface AppState {
   todos: Todo[];
 }
 
-class App extends React.Component<{}, AppState> {
-  constructor(props: {}) {
+class App extends React.Component<unknown, AppState> {
+  constructor(props: unknown) {
     super(props);
 
     this.state = {
