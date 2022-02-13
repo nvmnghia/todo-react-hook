@@ -1,7 +1,12 @@
 import React from 'react';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCheck, faPen, faXmark } from '@fortawesome/free-solid-svg-icons';
+import {
+  faCheck,
+  faPen,
+  faRotateLeft,
+  faXmark,
+} from '@fortawesome/free-solid-svg-icons';
 
 const EditButton = ({ onStartEdit }: { onStartEdit: () => void }) => (
   <button className='btn btn-outline-primary' onClick={onStartEdit}>
@@ -15,10 +20,16 @@ const SaveButton = ({ onSave }: { onSave: () => void }) => (
   </button>
 );
 
+const UndoButton = ({ onClick }: { onClick: () => void }) => (
+  <button className='btn btn-outline-danger' onClick={onClick}>
+    <FontAwesomeIcon icon={faRotateLeft} />
+  </button>
+);
+
 const RemoveButton = ({ onRemove }: { onRemove: () => void }) => (
   <button className='btn btn-outline-danger' onClick={onRemove}>
     <FontAwesomeIcon icon={faXmark} />
   </button>
 );
 
-export { EditButton, SaveButton, RemoveButton };
+export { EditButton, SaveButton, UndoButton, RemoveButton };

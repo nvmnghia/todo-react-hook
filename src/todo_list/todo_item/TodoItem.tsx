@@ -1,7 +1,12 @@
 import React from 'react';
 
 import Todo from '../../Todo';
-import { EditButton, RemoveButton, SaveButton } from './TodoItemButtons';
+import {
+  EditButton,
+  RemoveButton,
+  SaveButton,
+  UndoButton,
+} from './TodoItemButtons';
 import { TodoContent, TodoEditor } from './TodoItemContent';
 
 //================================================================================
@@ -68,12 +73,15 @@ export default class TodoItem extends React.Component<
     );
 
     const editOrSaveButton = this.state.editing ? (
-      <SaveButton
-        onSave={() => {
-          this.toggleEditingState();
-          this.save(this.tmpContent);
-        }}
-      />
+      <>
+        <SaveButton
+          onSave={() => {
+            this.toggleEditingState();
+            this.save(this.tmpContent);
+          }}
+        />
+        <UndoButton onClick={this.toggleEditingState} />
+      </>
     ) : (
       <EditButton onStartEdit={this.toggleEditingState} />
     );
