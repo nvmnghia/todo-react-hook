@@ -63,12 +63,17 @@ export default class TodoItem extends React.Component<
     );
 
     return (
-      <div className='d-flex align-items-start gap-2 p-2 mb-2 border border-1 rounded-3'>
-        <div className='flex-grow-1 align-self-center'>{contentBox}</div>
+      <div className='p-2 mb-2 border border-1 rounded-3'>
+        <div className='d-flex align-items-start gap-2 mb-2'>
+          <div className='flex-grow-1 align-self-center text-muted'>
+            {this.props.todo.date.toLocaleString()}
+          </div>
 
-        {editOrSaveButton}
+          {editOrSaveButton}
 
-        <RemoveButton onRemove={this.remove} />
+          <RemoveButton onRemove={this.remove} />
+        </div>
+        {contentBox}
       </div>
     );
   }
