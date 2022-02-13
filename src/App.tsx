@@ -41,7 +41,7 @@ class App extends React.Component<unknown, AppState> {
   editTodo(id: number, content: string) {
     this.setState((state) => ({
       todos: state.todos.map((todo) =>
-        todo.id === id ? { ...todo, content } : todo
+        todo.id === id ? todo.cloneNewContent(content) : todo
       ),
     }));
   }
