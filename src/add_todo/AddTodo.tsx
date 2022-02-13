@@ -47,6 +47,7 @@ export default class AddTodo extends React.Component<
             value={this.state.content}
             onChange={this.handleChange}
             placeholder='Note something'
+            required
           />
         </div>
 
