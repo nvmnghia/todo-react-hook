@@ -1,6 +1,20 @@
 import React, { ChangeEvent, FormEvent } from 'react';
 
-const validate = (content: string): boolean => content.trim().length !== 0;
+const validate = (content: string): AddTodoState => {
+  if (content.length === 0) {
+    return { content, valid: false, errorMessage: 'Content is empty' };
+  }
+
+  if (content.trim().length === 0) {
+    return {
+      content,
+      valid: false,
+      errorMessage: 'Content only contains whitespaces',
+    };
+  }
+
+  return { content, valid: true, errorMessage: '' };
+};
 
 interface AddTodoProps {
   add: (content: string) => void;
@@ -14,16 +28,23 @@ interface AddTodoState {
   // - true: valid
   // - false: invalid
   valid?: boolean;
+  errorMessage?: string;
 }
 
 export default class AddTodo extends React.Component<
   AddTodoProps,
   AddTodoState
 > {
+  static DEFAULT_STATE = {
+    content: '',
+    valid: undefined,
+    errorMessage: '',
+  };
+
   constructor(props: AddTodoProps) {
     super(props);
 
-    this.state = { content: '' };
+    this.state = { ...AddTodo.DEFAULT_STATE };
 
     this.handleInput = this.handleInput.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -34,10 +55,7 @@ export default class AddTodo extends React.Component<
       // Don't validate just yet when the user first type
       this.setState({ content });
     } else {
-      this.setState({
-        content,
-        valid: validate(content),
-      });
+      this.setState(validate(content));
     }
   }
 
@@ -48,13 +66,14 @@ export default class AddTodo extends React.Component<
 
     // Validate for the first time
     if (valid === undefined) {
-      valid = validate(this.state.content);
-      this.setState({ valid });
+      const validatedState = validate(this.state.content);
+      valid = validatedState.valid;
+      this.setState(validatedState);
     }
 
     if (valid) {
-      this.props.add(this.state.content);
-      this.setState({ content: '', valid: undefined });
+      this.props.add(this.state.content); // validate() doesn't modify content
+      this.setState({ ...AddTodo.DEFAULT_STATE });
     }
   }
 
@@ -69,6 +88,7 @@ export default class AddTodo extends React.Component<
       <form
         className='row row-cols-md-auto g-3 align-items-top'
         onSubmit={this.handleSubmit}
+        noValidate
       >
         <div className='col-md-auto flex-grow-1'>
           <input
@@ -78,10 +98,9 @@ export default class AddTodo extends React.Component<
             onInput={this.handleInput}
             aria-describedby='invalid-input'
             placeholder='Note something'
-            required
           />
           <div id='invalid-input' className='invalid-feedback'>
-            Todo content only contains spaces.
+            {this.state.errorMessage}
           </div>
         </div>
 
