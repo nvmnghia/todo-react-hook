@@ -1,3 +1,4 @@
+// Workaround, as serialized Todo instance doesn't use getter
 interface ITodo {
   _id: number;
   _content: string;
