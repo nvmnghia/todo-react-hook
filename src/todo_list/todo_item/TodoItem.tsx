@@ -53,6 +53,8 @@ const TodoItem = (props: TodoItemProps) => {
   return (
     <div className='p-2 mb-2 border border-1 rounded-3'>
       <div className='d-flex align-items-start gap-2 mb-2'>
+        <div className='align-self-center pe-2 text-muted'>{props.todo.id}</div>
+
         <div className='flex-grow-1 align-self-center text-muted'>
           {props.todo.date.toLocaleString()}
         </div>
