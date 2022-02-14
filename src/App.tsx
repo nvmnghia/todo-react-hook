@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import AddTodo from './add_todo/AddTodo';
 import Todo from './Todo';
@@ -29,7 +29,10 @@ const saveToLocalStorage = (todos: Todo[]) => {
 //================================================================================
 
 export default function App() {
-  const [todos, setTodos] = useState(loadFromLocalStorage());
+  const [todos, setTodos] = useState<Todo[]>([]);
+  useEffect(() => {
+    setTodos(loadFromLocalStorage());
+  }, []);
 
   const addTodo = (content: string) => {
     setTodos(
