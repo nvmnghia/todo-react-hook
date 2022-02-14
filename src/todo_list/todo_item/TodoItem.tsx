@@ -24,22 +24,20 @@ interface TodoItemProps {
 
 interface TodoItemState {
   editing: boolean;
+  tmpContent: string; // Content waiting to be finally saved
 }
 
 export default class TodoItem extends React.Component<
   TodoItemProps,
   TodoItemState
 > {
-  // Content waiting to be finally saved
-  tmpContent: string;
-
   constructor(props: TodoItemProps) {
     super(props);
 
     this.state = {
       editing: false,
+      tmpContent: props.todo.content,
     };
-    this.tmpContent = '';
 
     this.toggleEditingState = this.toggleEditingState.bind(this);
     this.remove = this.remove.bind(this);
@@ -59,14 +57,14 @@ export default class TodoItem extends React.Component<
   }
 
   updateTmpContent(tmpContent: string) {
-    this.tmpContent = tmpContent;
+    this.setState({ tmpContent });
   }
 
   render() {
     const contentBox = this.state.editing ? (
       <TodoEditor
-        content={this.props.todo.content}
-        save={this.updateTmpContent}
+        tmpContent={this.state.tmpContent}
+        onChange={this.updateTmpContent}
       />
     ) : (
       <TodoContent content={this.props.todo.content} />
@@ -77,7 +75,7 @@ export default class TodoItem extends React.Component<
         <SaveButton
           onSave={() => {
             this.toggleEditingState();
-            this.save(this.tmpContent);
+            this.save(this.state.tmpContent);
           }}
         />
         <UndoButton onClick={this.toggleEditingState} />
