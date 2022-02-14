@@ -34,24 +34,19 @@ export default function App() {
     setTodos(loadFromLocalStorage());
   }, []);
 
+  useEffect(() => {
+    saveToLocalStorage(todos);
+  }, [todos]);
   const addTodo = (content: string) => {
-    setTodos(
-      wrapTodosManipulator((prevTodos) => [...prevTodos, new Todo(content)])
-    );
+    setTodos((prevTodos) => [...prevTodos, new Todo(content)]);
   };
   const removeTodo = (id: number) => {
-    setTodos(
-      wrapTodosManipulator((prevTodos) =>
-        prevTodos.filter((todo) => todo.id !== id)
-      )
-    );
+    setTodos((prevTodos) => prevTodos.filter((todo) => todo.id !== id));
   };
   const editTodo = (id: number, content: string) => {
-    setTodos(
-      wrapTodosManipulator((prevTodos) =>
-        prevTodos.map((todo) =>
-          todo.id === id ? todo.cloneNewContent(content) : todo
-        )
+    setTodos((prevTodos) =>
+      prevTodos.map((todo) =>
+        todo.id === id ? todo.cloneNewContent(content) : todo
       )
     );
   };
@@ -72,16 +67,3 @@ export default function App() {
     </div>
   );
 }
-
-type TodosManipulator = (prevTodos: Todo[]) => Todo[];
-// Add local storage save to function modifying todos
-// TODO: is this a suitable place?
-const wrapTodosManipulator = (
-  manipulator: TodosManipulator
-): TodosManipulator => {
-  return (prevTodos: Todo[]) => {
-    const todos = manipulator(prevTodos);
-    saveToLocalStorage(todos);
-    return todos;
-  };
-};
