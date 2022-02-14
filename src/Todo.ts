@@ -25,6 +25,7 @@ export default class Todo {
   // I gave up spread syntax & prototypical inheritance
   cloneNewContent(newContent: string): Todo {
     const clone = Object.create(this);
+    clone._id = this.id;
     clone.content = newContent;
     return clone;
   }
