@@ -1,113 +1,118 @@
-import React, { ChangeEvent, FormEvent } from 'react';
+import React, { ChangeEvent, FormEvent, useState } from 'react';
 
-const validate = (content: string): AddTodoState => {
-  if (content.length === 0) {
-    return { content, valid: false, errorMessage: 'Content is empty' };
-  }
+//================================================================================
+// Validation
+//================================================================================
 
-  if (content.trim().length === 0) {
-    return {
-      content,
-      valid: false,
-      errorMessage: 'Content only contains whitespaces',
-    };
-  }
-
-  return { content, valid: true, errorMessage: '' };
-};
-
-interface AddTodoProps {
-  add: (content: string) => void;
-}
-
-interface AddTodoState {
-  content: string;
-
+interface ValidationResult {
   // 3 states
   // - undefined: not yet validated (when the user first types)
   // - true: valid
   // - false: invalid
   valid?: boolean;
-  errorMessage?: string;
+  errorMessage: string;
 }
 
-export default class AddTodo extends React.Component<
-  AddTodoProps,
-  AddTodoState
-> {
-  static DEFAULT_STATE = {
-    content: '',
-    valid: undefined,
-    errorMessage: '',
-  };
-
-  constructor(props: AddTodoProps) {
-    super(props);
-
-    this.state = { ...AddTodo.DEFAULT_STATE };
-
-    this.handleInput = this.handleInput.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
+const validate = (content: string): ValidationResult => {
+  if (content.length === 0) {
+    return { valid: false, errorMessage: 'Content is empty' };
   }
 
-  handleInput({ target: { value: content } }: ChangeEvent<HTMLInputElement>) {
-    if (this.state.valid === undefined) {
+  if (content.trim().length === 0) {
+    return {
+      valid: false,
+      errorMessage: 'Content only contains whitespaces',
+    };
+  }
+
+  return { valid: true, errorMessage: '' };
+};
+
+//================================================================================
+// Add Todo
+//================================================================================
+
+interface AddTodoProps {
+  add: (content: string) => void;
+}
+
+const DEFAULT_STATE = {
+  content: '',
+  valid: undefined,
+  errorMessage: '',
+};
+
+type ValidationState = boolean | undefined;
+
+export default function AddTodo(props: AddTodoProps) {
+  const [content, setContent] = useState(DEFAULT_STATE.content);
+  const [valid, setValid] = useState<ValidationState>(DEFAULT_STATE.valid);
+  const [errorMessage, setErrorMessage] = useState(DEFAULT_STATE.errorMessage);
+
+  const handleInput = ({
+    target: { value },
+  }: ChangeEvent<HTMLInputElement>) => {
+    if (valid === undefined) {
       // Don't validate just yet when the user first type
-      this.setState({ content });
     } else {
-      this.setState(validate(content));
+      const validationResult = validate(value);
+      setValid(validationResult.valid);
+      setErrorMessage(validationResult.errorMessage);
     }
-  }
-
-  handleSubmit(event: FormEvent) {
+    setContent(value);
+  };
+  const handleSubmit = (event: FormEvent) => {
     event.preventDefault();
 
-    let valid = this.state.valid;
+    let _valid = valid;
 
-    // Validate for the first time
-    if (valid === undefined) {
-      const validatedState = validate(this.state.content);
-      valid = validatedState.valid;
-      this.setState(validatedState);
+    if (_valid === undefined) {
+      // Validate for the first time
+      const validationResult = validate(content);
+      _valid = validationResult.valid;
+
+      setValid(validationResult.valid);
+      setErrorMessage(validationResult.errorMessage);
     }
 
-    if (valid) {
-      this.props.add(this.state.content); // validate() doesn't modify content
-      this.setState({ ...AddTodo.DEFAULT_STATE });
+    if (_valid) {
+      props.add(content);
+
+      setContent(DEFAULT_STATE.content);
+      setValid(DEFAULT_STATE.valid);
+      setErrorMessage(DEFAULT_STATE.errorMessage);
     }
+  };
+
+  let bsInputValidationState = '';
+  if (valid !== undefined) {
+    bsInputValidationState = valid ? 'is-valid' : 'is-invalid';
   }
 
-  render() {
-    let inputValidationState = '';
-    if (this.state.valid !== undefined) {
-      inputValidationState = this.state.valid ? 'is-valid' : 'is-invalid';
-    }
-
-    return (
-      // TODO: Must a form be used here?
-      <form
-        className='row row-cols-md-auto g-3 align-items-top'
-        onSubmit={this.handleSubmit}
-        noValidate
-      >
-        <div className='col-md-auto flex-grow-1'>
-          <input
-            type='text'
-            className={`form-control ${inputValidationState}`}
-            value={this.state.content}
-            onInput={this.handleInput}
-            aria-describedby='invalid-input'
-            placeholder='Note something'
-          />
-          <div id='invalid-input' className='invalid-feedback'>
-            {this.state.errorMessage}
-          </div>
+  return (
+    // TODO: Must a form be used here?
+    <form
+      className='row row-cols-md-auto g-3 align-items-top'
+      onSubmit={handleSubmit}
+      noValidate
+    >
+      <div className='col-md-auto flex-grow-1'>
+        <input
+          type='text'
+          className={`form-control ${bsInputValidationState}`}
+          value={content}
+          onInput={handleInput}
+          aria-describedby='invalid-input'
+          placeholder='Note something'
+        />
+        <div id='invalid-input' className='invalid-feedback'>
+          {errorMessage}
         </div>
+      </div>
 
-        <div className='col-md-auto col-xs-12'>
-          <button className='btn btn-primary w-100'>Add</button>
-        </div>
-      </form>
-    );
-  }
+      <div className='col-md-auto col-xs-12'>
+        <button className='btn btn-primary w-100'>Add</button>
+      </div>
+    </form>
+  );
 }
