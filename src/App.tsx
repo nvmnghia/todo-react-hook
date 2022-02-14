@@ -13,12 +13,7 @@ class App extends React.Component<unknown, AppState> {
     super(props);
 
     this.state = {
-      todos: [
-        new Todo('Something in the way she moves'),
-        new Todo(
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
-        ),
-      ],
+      todos: App.loadFromLocalStorage(),
     };
 
     this.addTodo = this.addTodo.bind(this);
@@ -27,23 +22,29 @@ class App extends React.Component<unknown, AppState> {
   }
 
   addTodo(content: string) {
-    this.setState((state) => ({
-      todos: [...state.todos, new Todo(content)],
-    }));
+    this.setState((state) => {
+      const todos = [...state.todos, new Todo(content)];
+      App.saveToLocalStorage(todos);
+      return { todos };
+    });
   }
 
   removeTodo(id: number) {
-    this.setState((state) => ({
-      todos: state.todos.filter((todo) => todo.id !== id),
-    }));
+    this.setState((state) => {
+      const todos = state.todos.filter((todo) => todo.id !== id);
+      App.saveToLocalStorage(todos);
+      return { todos };
+    });
   }
 
   editTodo(id: number, content: string) {
-    this.setState((state) => ({
-      todos: state.todos.map((todo) =>
+    this.setState((state) => {
+      const todos = state.todos.map((todo) =>
         todo.id === id ? todo.cloneNewContent(content) : todo
-      ),
-    }));
+      );
+      App.saveToLocalStorage(todos);
+      return { todos };
+    });
   }
 
   render() {
@@ -66,6 +67,23 @@ class App extends React.Component<unknown, AppState> {
         </div>
       </div>
     );
+  }
+
+  private static ITEM_KEY = 'todos';
+
+  private static saveToLocalStorage(todos: Todo[]) {
+    localStorage.setItem(this.ITEM_KEY, JSON.stringify(todos));
+  }
+
+  // TODO: rewrite this whole parsing method & the Todo class itself
+  private static loadFromLocalStorage(): Todo[] {
+    const json = localStorage.getItem(this.ITEM_KEY);
+    if (json === null) {
+      return [];
+    }
+
+    const tmpArr = JSON.parse(json);
+    return tmpArr.map((tmpTodo: any) => Todo.deserialize(tmpTodo));
   }
 }
 
