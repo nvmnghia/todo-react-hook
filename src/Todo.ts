@@ -5,14 +5,15 @@ interface ITodo {
 }
 
 export default class Todo {
-  private static counter = 1;
+  private static readonly COUNTER_KEY = 'todo-counter';
+  private static counter = Todo.loadCounter();
 
   private _id: number;
   private _content: string;
   private _date: Date;
 
   constructor(content: string) {
-    this._id = Todo.counter++;
+    this._id = Todo.createID();
 
     // Try replacing these 2 pricks with this.content = content :)
     // https://stackoverflow.com/questions/49699067/property-has-no-initializer-and-is-not-definitely-assigned-in-the-construc
@@ -42,6 +43,17 @@ export default class Todo {
 
   get id() {
     return this._id;
+  }
+
+  private static createID(): number {
+    const id = Todo.counter++;
+    localStorage.setItem(Todo.COUNTER_KEY, Todo.counter.toString());
+    return id;
+  }
+
+  private static loadCounter(): number {
+    const counterStr = localStorage.getItem(Todo.COUNTER_KEY);
+    return counterStr ? parseInt(counterStr) : 1;
   }
 
   static deserialize(input: unknown): Todo {
