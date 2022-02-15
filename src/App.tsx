@@ -38,7 +38,9 @@ export default function App() {
     saveToLocalStorage(todos);
   }, [todos]);
   const addTodo = (content: string) => {
-    setTodos((prevTodos) => [...prevTodos, new Todo(content)]);
+    // Todo constructor has side effect, thus can't be used inside updater function
+    const newTodo = new Todo(content);
+    setTodos((prevTodos) => [...prevTodos, newTodo]);
   };
   const removeTodo = (id: number) => {
     setTodos((prevTodos) => prevTodos.filter((todo) => todo.id !== id));
