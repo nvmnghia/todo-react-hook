@@ -1,32 +1,9 @@
 import React, { useEffect, useState } from 'react';
 
 import AddTodo from './add_todo/AddTodo';
+import { loadFromLocalStorage, saveToLocalStorage } from './local_storage';
 import Todo from './Todo';
 import TodoList from './todo_list/TodoList';
-
-//================================================================================
-// Local Storage
-//================================================================================
-
-const ITEM_KEY = 'todos';
-
-const loadFromLocalStorage = (): Todo[] => {
-  const json = localStorage.getItem(ITEM_KEY);
-  if (json === null) {
-    return [];
-  }
-
-  const tmpArr = JSON.parse(json);
-  return tmpArr.map((tmpTodo: any) => Todo.deserialize(tmpTodo));
-};
-
-const saveToLocalStorage = (todos: Todo[]) => {
-  localStorage.setItem(ITEM_KEY, JSON.stringify(todos));
-};
-
-//================================================================================
-// App
-//================================================================================
 
 export default function App() {
   const [todos, setTodos] = useState<Todo[]>([]);
