@@ -1,69 +1,85 @@
-// Workaround, as serialized Todo instance doesn't use getter
-interface ITodo {
-  _id: number;
-  _content: string;
-  _date: Date;
+// Previously, data was stored as OldFormat
+// This IIFE converts that old format to the new one
+(() => {
+  type OldFormat = {
+    _id: number;
+    _content: string;
+    _date: string;
+  };
+
+  const ITEM_KEY = 'todos'; // TODO: duplicate inside App.tsx
+  const data = localStorage.getItem(ITEM_KEY);
+  if (!data) {
+    return;
+  }
+
+  const todos = JSON.parse(data);
+  if (!Array.isArray(todos)) {
+    throw new Error('We fucked up somewhere');
+  }
+
+  if (todos.length === 0) {
+    return;
+  }
+
+  const sample = todos[0];
+  if (!Object.prototype.hasOwnProperty.call(sample, '_id')) {
+    // New format, do nothing
+    return;
+  }
+
+  const newFormat = todos.map((todo: OldFormat) => ({
+    id: todo._id,
+    content: todo._content,
+    date: todo._date, // No need to parse date back and forth
+  }));
+  localStorage.setItem(ITEM_KEY, JSON.stringify(newFormat));
+})();
+
+const COUNTER_KEY = 'todo-counter';
+
+const getCounter = (): number => {
+  const counterStr = localStorage.getItem(COUNTER_KEY);
+  return counterStr ? parseInt(counterStr) : 1;
+};
+
+const setCounter = (counter: number) => {
+  localStorage.setItem(COUNTER_KEY, counter.toString());
+};
+
+interface ValidTodoSerialized {
+  id: number;
+  content: string;
+  date: string;
 }
 
-export default class Todo {
-  private static readonly COUNTER_KEY = 'todo-counter';
-  private static counter = Todo.loadCounter();
-
-  private _id: number;
-  private _content: string;
-  private _date: Date;
-
-  constructor(content: string) {
-    this._id = Todo.createID();
-
-    // Try replacing these 2 pricks with this.content = content :)
-    // https://stackoverflow.com/questions/49699067/property-has-no-initializer-and-is-not-definitely-assigned-in-the-construc
-    this._content = content;
-    this._date = new Date();
-  }
-
-  // I gave up spread syntax & prototypical inheritance
-  cloneNewContent(newContent: string): Todo {
-    const clone = Object.create(this);
-    clone._id = this.id;
-    clone.content = newContent;
-    return clone;
-  }
-
-  get content() {
-    return this._content;
-  }
-
-  set content(content: string) {
-    this._content = content;
-    this._date = new Date();
-  }
-
-  get date() {
-    return this._date;
-  }
-
-  get id() {
-    return this._id;
-  }
-
-  private static createID(): number {
-    const id = Todo.counter++;
-    localStorage.setItem(Todo.COUNTER_KEY, Todo.counter.toString());
-    return id;
-  }
-
-  private static loadCounter(): number {
-    const counterStr = localStorage.getItem(Todo.COUNTER_KEY);
-    return counterStr ? parseInt(counterStr) : 1;
-  }
-
-  static deserialize(input: unknown): Todo {
-    const casted = input as ITodo;
-    const tmp = new Todo('');
-    tmp._id = casted._id;
-    tmp._content = casted._content;
-    tmp._date = new Date(casted._date);
-    return tmp;
-  }
+export default interface Todo {
+  id: number;
+  content: string;
+  date: Date;
 }
+
+// ID of the NEXT todo
+let todoCounter = getCounter();
+
+const todoFromContent = (content: string): Todo => {
+  const todo: Todo = {
+    id: todoCounter,
+    content,
+    date: new Date(),
+  };
+
+  todoCounter++;
+  setCounter(todoCounter);
+
+  return todo;
+};
+
+const todosFromJSON = (json: string): Todo[] => {
+  console.log(json);
+  return JSON.parse(json).map(
+    (tmp: ValidTodoSerialized) => ({ ...tmp, date: new Date(tmp.date) } as Todo)
+  );
+};
+
+export { todoFromContent, todosFromJSON };

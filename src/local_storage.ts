@@ -1,4 +1,4 @@
-import Todo from './Todo';
+import Todo, { todosFromJSON } from './Todo';
 
 const ITEM_KEY = 'todos';
 
@@ -8,8 +8,7 @@ const loadFromLocalStorage = (): Todo[] => {
     return [];
   }
 
-  const tmpArr = JSON.parse(json);
-  return tmpArr.map((tmpTodo: any) => Todo.deserialize(tmpTodo));
+  return todosFromJSON(json);
 };
 
 const saveToLocalStorage = (todos: Todo[]) => {

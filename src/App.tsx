@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 import AddTodo from './add_todo/AddTodo';
 import { loadFromLocalStorage, saveToLocalStorage } from './local_storage';
-import Todo from './Todo';
+import Todo, { todoFromContent } from './Todo';
 import TodoList from './todo_list/TodoList';
 
 export default function App() {
@@ -16,7 +16,7 @@ export default function App() {
   }, [todos]);
   const addTodo = (content: string) => {
     // Todo constructor has side effect, thus can't be used inside updater function
-    const newTodo = new Todo(content);
+    const newTodo = todoFromContent(content);
     setTodos((prevTodos) => [...prevTodos, newTodo]);
   };
   const removeTodo = (id: number) => {
@@ -25,7 +25,7 @@ export default function App() {
   const editTodo = (id: number, content: string) => {
     setTodos((prevTodos) =>
       prevTodos.map((todo) =>
-        todo.id === id ? todo.cloneNewContent(content) : todo
+        todo.id === id ? { id, content, date: new Date() } : todo
       )
     );
   };
