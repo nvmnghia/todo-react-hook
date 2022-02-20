@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import Todo from '../../../../Todo';
 import {
@@ -31,6 +31,8 @@ interface TodoItemProps {
 }
 
 const TodoItem = (props: TodoItemProps) => {
+  const navigate = useNavigate();
+
   // Editing state: toggles textarea and changes buttons
   // - In editing mode: Save, Undo, Remove buttons
   // - Otherwise: Edit & Remove buttons
@@ -41,7 +43,10 @@ const TodoItem = (props: TodoItemProps) => {
   const [tmpContent, setTmpContent] = useState(props.todo.content);
 
   const save = (content: string) => props.edit(props.todo.id, content);
-  const remove = () => props.remove(props.todo.id);
+  const remove = () => {
+    props.remove(props.todo.id);
+    navigate('/');
+  };
 
   const contentBox = editing ? (
     <TodoEditor tmpContent={tmpContent} onChange={setTmpContent} />
