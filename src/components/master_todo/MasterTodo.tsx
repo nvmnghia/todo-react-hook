@@ -1,35 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
 import AddTodo from './add_todo/AddTodo';
-import Todo, { todoFromContent } from '../../Todo';
-import { loadFromLocalStorage, saveToLocalStorage } from '../../local_storage';
+import Todo from '../../Todo';
 import TodoList from './todo_list/TodoList';
 
-export default function MasterTodo() {
-  const [todos, setTodos] = useState<Todo[]>([]);
-  useEffect(() => {
-    setTodos(loadFromLocalStorage());
-  }, []);
+interface MasterTodoProps {
+  todos: Todo[];
+  addTodo: (content: string) => void;
+  removeTodo: (id: number) => void;
+  editTodo: (id: number, content: string) => void;
+}
 
-  useEffect(() => {
-    saveToLocalStorage(todos);
-  }, [todos]);
-  const addTodo = (content: string) => {
-    // Todo constructor has side effect, thus can't be used inside updater function
-    const newTodo = todoFromContent(content);
-    setTodos((prevTodos) => [...prevTodos, newTodo]);
-  };
-  const removeTodo = (id: number) => {
-    setTodos((prevTodos) => prevTodos.filter((todo) => todo.id !== id));
-  };
-  const editTodo = (id: number, content: string) => {
-    setTodos((prevTodos) =>
-      prevTodos.map((todo) =>
-        todo.id === id ? { id, content, date: new Date() } : todo
-      )
-    );
-  };
-
+export default function MasterTodo(props: MasterTodoProps) {
   return (
     <div className='container'>
       <div className='row d-flex justify-content-center'>
@@ -38,9 +20,13 @@ export default function MasterTodo() {
             <h2>TODO</h2>
           </div>
 
-          <AddTodo add={addTodo} />
+          <AddTodo add={props.addTodo} />
 
-          <TodoList todos={todos} remove={removeTodo} edit={editTodo} />
+          <TodoList
+            todos={props.todos}
+            remove={props.removeTodo}
+            edit={props.editTodo}
+          />
         </div>
       </div>
     </div>
