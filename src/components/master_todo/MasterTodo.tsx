@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 
 import AddTodo from './add_todo/AddTodo';
-import Todo, { todoFromContent } from './Todo';
-import { loadFromLocalStorage, saveToLocalStorage } from './local_storage';
+import Todo, { todoFromContent } from '../../Todo';
+import { loadFromLocalStorage, saveToLocalStorage } from '../../local_storage';
 import TodoList from './todo_list/TodoList';
 
 export default function App() {
