@@ -3,13 +3,16 @@ import 'bootstrap/dist/js/bootstrap.bundle';
 
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { BrowserRouter } from 'react-router-dom';
 
 import MasterTodo from './components/master_todo/MasterTodo';
 import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
   <React.StrictMode>
-    <MasterTodo />
+    <BrowserRouter>
+      <MasterTodo />
+    </BrowserRouter>
   </React.StrictMode>,
   document.getElementById('root')
 );
