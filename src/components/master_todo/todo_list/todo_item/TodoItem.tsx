@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 import Todo from '../../../../Todo';
 import {
@@ -9,9 +10,16 @@ import {
 } from './TodoItemButtons';
 import { TodoContent, TodoEditor } from './TodoItemContent';
 
-//================================================================================
-// Todo item
-//================================================================================
+interface LinkTodoProps {
+  children?: React.ReactNode; // Optional for case without children
+  id: number;
+}
+
+const LinkTodo = ({ id, children }: LinkTodoProps) => (
+  <Link className='text-muted' to={`/todo/${id}`}>
+    {children}
+  </Link>
+);
 
 interface TodoItemProps {
   todo: Todo;
@@ -53,10 +61,14 @@ const TodoItem = (props: TodoItemProps) => {
   return (
     <div className='p-2 mb-2 border border-1 rounded-3'>
       <div className='d-flex align-items-start gap-2 mb-2'>
-        <div className='align-self-center pe-2 text-muted'>{props.todo.id}</div>
+        <div className='align-self-center pe-2'>
+          <LinkTodo id={props.todo.id}>{props.todo.id}</LinkTodo>
+        </div>
 
-        <div className='flex-grow-1 align-self-center text-muted'>
-          {props.todo.date.toLocaleString()}
+        <div className='flex-grow-1 align-self-center'>
+          <LinkTodo id={props.todo.id}>
+            {props.todo.date.toLocaleString()}
+          </LinkTodo>
         </div>
 
         {editOrSaveButton}

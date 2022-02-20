@@ -38,7 +38,11 @@ export default function App() {
 
   // Links
   const links = todos.map((todo) => (
-    <Route path={`${todo.id}`} element={<DetailTodo />} key={todo.id} />
+    <Route
+      path={`${todo.id}`}
+      element={<DetailTodo todo={todo} remove={removeTodo} edit={editTodo} />}
+      key={todo.id}
+    />
   ));
 
   const masterTodo = (
