@@ -5,7 +5,7 @@ import Todo, { todoFromContent } from '../../Todo';
 import { loadFromLocalStorage, saveToLocalStorage } from '../../local_storage';
 import TodoList from './todo_list/TodoList';
 
-export default function App() {
+export default function MasterTodo() {
   const [todos, setTodos] = useState<Todo[]>([]);
   useEffect(() => {
     setTodos(loadFromLocalStorage());
