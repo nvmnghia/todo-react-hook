@@ -31,9 +31,13 @@ interface TodoItemProps {
 }
 
 const TodoItem = (props: TodoItemProps) => {
+  // Editing state: toggles textarea and changes buttons
+  // - In editing mode: Save, Undo, Remove buttons
+  // - Otherwise: Edit & Remove buttons
   const [editing, setEditing] = useState(false);
   const toggleEditing = () => setEditing(!editing);
 
+  // Temp content of textarea (controlled form)
   const [tmpContent, setTmpContent] = useState(props.todo.content);
 
   const save = (content: string) => props.edit(props.todo.id, content);
