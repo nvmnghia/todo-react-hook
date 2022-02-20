@@ -13,22 +13,18 @@ interface MasterTodoProps {
 
 export default function MasterTodo(props: MasterTodoProps) {
   return (
-    <div className='container'>
-      <div className='row d-flex justify-content-center'>
-        <div className='col-md-8'>
-          <div className='row mt-4'>
-            <h2>TODO</h2>
-          </div>
-
-          <AddTodo add={props.addTodo} />
-
-          <TodoList
-            todos={props.todos}
-            remove={props.removeTodo}
-            edit={props.editTodo}
-          />
-        </div>
+    <>
+      <div className='row mt-4'>
+        <h2>TODO</h2>
       </div>
-    </div>
+
+      <AddTodo add={props.addTodo} />
+
+      <TodoList
+        todos={props.todos}
+        remove={props.removeTodo}
+        edit={props.editTodo}
+      />
+    </>
   );
 }

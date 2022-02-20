@@ -7,6 +7,7 @@ import Todo, { todoFromContent } from './Todo';
 import { loadFromLocalStorage, saveToLocalStorage } from './local_storage';
 import DetailTodo from './components/detail_todo/DetailTodo';
 import NotFound from './components/not_found/NotFound';
+import AppOutlet from './components/app_outlet/AppOutlet';
 
 export default function App() {
   // State setup
@@ -52,8 +53,10 @@ export default function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path='/' element={masterTodo} />
-        <Route path='todo'>{links}</Route>
+        <Route path='/' element={<AppOutlet />}>
+          <Route path='' element={masterTodo} />
+          <Route path='todo'>{links}</Route>
+        </Route>
 
         {/* Route order doesn't seem to affect paths match, which is good */}
         <Route path='*' element={<NotFound />} />
