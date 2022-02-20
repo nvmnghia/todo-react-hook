@@ -16,3 +16,16 @@ const saveToLocalStorage = (todos: Todo[]) => {
 };
 
 export { loadFromLocalStorage, saveToLocalStorage };
+
+const COUNTER_KEY = 'todo-counter';
+
+const getCounter = (): number | undefined => {
+  const counterStr = localStorage.getItem(COUNTER_KEY);
+  return counterStr ? parseInt(counterStr) : undefined;
+};
+
+const setCounter = (counter: number) => {
+  localStorage.setItem(COUNTER_KEY, counter.toString());
+};
+
+export { getCounter, setCounter };

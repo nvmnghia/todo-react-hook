@@ -1,4 +1,7 @@
 // Previously, data was stored as OldFormat
+
+import { getCounter, setCounter } from './local_storage';
+
 // This IIFE converts that old format to the new one
 (() => {
   type OldFormat = {
@@ -36,17 +39,6 @@
   localStorage.setItem(ITEM_KEY, JSON.stringify(newFormat));
 })();
 
-const COUNTER_KEY = 'todo-counter';
-
-const getCounter = (): number => {
-  const counterStr = localStorage.getItem(COUNTER_KEY);
-  return counterStr ? parseInt(counterStr) : 1;
-};
-
-const setCounter = (counter: number) => {
-  localStorage.setItem(COUNTER_KEY, counter.toString());
-};
-
 interface ValidTodoSerialized {
   id: number;
   content: string;
@@ -60,7 +52,7 @@ export default interface Todo {
 }
 
 // ID of the NEXT todo
-let todoCounter = getCounter();
+let todoCounter = getCounter() ?? 1;
 
 const todoFromContent = (content: string): Todo => {
   const todo: Todo = {
