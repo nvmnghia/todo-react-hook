@@ -98,6 +98,7 @@ export default function AddTodo(props: AddTodoProps) {
     >
       <div className='col-md-auto flex-grow-1'>
         <input
+          autoFocus
           type='text'
           className={`form-control ${bsInputValidationState}`}
           value={content}
