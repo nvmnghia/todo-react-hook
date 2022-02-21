@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, LinkProps, useNavigate } from 'react-router-dom';
 
 import Todo from '../../../../Todo';
 import {
@@ -10,14 +10,11 @@ import {
 } from './TodoItemButtons';
 import { TodoContent, TodoEditor } from './TodoItemContent';
 
-interface LinkTodoProps {
-  children?: React.ReactNode; // Optional for case without children
-  id: number;
-}
+type LinkTodoProps = { todoId: number } & Omit<LinkProps, 'to'>;
 
-const LinkTodo = ({ id, children }: LinkTodoProps) => (
-  <Link className='text-muted' to={`/todo/${id}`}>
-    {children}
+const LinkTodo = ({ todoId, ...props }: LinkTodoProps) => (
+  <Link className='text-muted' to={`/todo/${todoId}`} {...props}>
+    {props.children}
   </Link>
 );
 
@@ -71,11 +68,11 @@ const TodoItem = (props: TodoItemProps) => {
     <div className='p-2 mb-2 border border-1 rounded-3'>
       <div className='d-flex align-items-start gap-2 mb-2'>
         <div className='align-self-center pe-2'>
-          <LinkTodo id={props.todo.id}>{props.todo.id}</LinkTodo>
+          <LinkTodo todoId={props.todo.id}>{props.todo.id}</LinkTodo>
         </div>
 
         <div className='flex-grow-1 align-self-center'>
-          <LinkTodo id={props.todo.id}>
+          <LinkTodo tabIndex={-1} todoId={props.todo.id}>
             {props.todo.date.toLocaleString()}
           </LinkTodo>
         </div>
