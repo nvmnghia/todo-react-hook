@@ -58,7 +58,12 @@ const TodoItem = (props: TodoItemProps) => {
           save(tmpContent);
         }}
       />
-      <UndoButton onClick={toggleEditing} />
+      <UndoButton
+        onClick={() => {
+          toggleEditing();
+          setTmpContent(props.todo.content);
+        }}
+      />
     </>
   ) : (
     <EditButton onStartEdit={toggleEditing} />
