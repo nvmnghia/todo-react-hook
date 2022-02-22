@@ -52,7 +52,13 @@ export default interface Todo {
 }
 
 // ID of the NEXT todo
-let todoCounter = getCounter() ?? 1;
+let todoCounter: number;
+// Wrap calls to anything related to local_storage.ts in a function
+// instead of top level call, to avoid circular dependency
+// setCounter is wrapped in todoFromContent
+export const initializeCounter = () => {
+  todoCounter = getCounter() ?? 1;
+};
 
 const todoFromContent = (content: string): Todo => {
   const todo: Todo = {

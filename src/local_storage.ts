@@ -1,8 +1,10 @@
-import Todo, { todosFromJSON } from './Todo';
+import Todo, { initializeCounter, todosFromJSON } from './Todo';
 
 const ITEM_KEY = 'todos';
 
 const loadFromLocalStorage = (): Todo[] => {
+  initializeCounter();
+
   const json = localStorage.getItem(ITEM_KEY);
   if (json === null) {
     return [];
