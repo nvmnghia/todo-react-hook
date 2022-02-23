@@ -23,7 +23,7 @@ export default function App() {
   const addTodo = (content: string) => {
     // Todo constructor has side effect, thus can't be used inside updater function
     const newTodo = todoFromContent(content);
-    setTodos((prevTodos) => [...prevTodos, newTodo]);
+    setTodos((prevTodos) => [newTodo, ...prevTodos]);
   };
   const removeTodo = (id: number) => {
     setTodos((prevTodos) => prevTodos.filter((todo) => todo.id !== id));
