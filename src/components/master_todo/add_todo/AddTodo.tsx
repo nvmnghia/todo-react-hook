@@ -44,7 +44,7 @@ const DEFAULT_STATE = {
 
 type ValidationState = boolean | undefined;
 
-export default function AddTodo(props: AddTodoProps) {
+export default function AddTodo({ add }: AddTodoProps) {
   const [content, setContent] = useState(DEFAULT_STATE.content);
   const [valid, setValid] = useState<ValidationState>(DEFAULT_STATE.valid);
   const [errorMessage, setErrorMessage] = useState(DEFAULT_STATE.errorMessage);
@@ -76,7 +76,7 @@ export default function AddTodo(props: AddTodoProps) {
     }
 
     if (_valid) {
-      props.add(content);
+      add(content);
 
       setContent(DEFAULT_STATE.content);
       setValid(DEFAULT_STATE.valid);

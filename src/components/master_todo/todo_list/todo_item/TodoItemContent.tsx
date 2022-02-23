@@ -7,17 +7,17 @@ interface TodoEditorProps {
   onChange: (content: string) => void;
 }
 
-const TodoEditor = (props: TodoEditorProps) => {
+const TodoEditor = ({ tmpContent, onChange }: TodoEditorProps) => {
   const handleChange = ({
     target: { value },
   }: ChangeEvent<HTMLTextAreaElement>) => {
-    props.onChange(value);
+    onChange(value);
   };
 
   return (
     <textarea
       className='w-100'
-      value={props.tmpContent}
+      value={tmpContent}
       onChange={handleChange}
     ></textarea>
   );

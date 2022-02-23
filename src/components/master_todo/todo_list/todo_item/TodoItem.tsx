@@ -27,7 +27,7 @@ interface TodoItemProps {
   edit: (id: number, content: string) => void;
 }
 
-const TodoItem = (props: TodoItemProps) => {
+const TodoItem = ({ todo, ...props }: TodoItemProps) => {
   const navigate = useNavigate();
 
   // Editing state: toggles textarea and changes buttons
@@ -37,18 +37,18 @@ const TodoItem = (props: TodoItemProps) => {
   const toggleEditing = () => setEditing((editingState) => !editingState);
 
   // Temp content of textarea (controlled form)
-  const [tmpContent, setTmpContent] = useState(props.todo.content);
+  const [tmpContent, setTmpContent] = useState(todo.content);
 
-  const save = (content: string) => props.edit(props.todo.id, content);
+  const save = (content: string) => props.edit(todo.id, content);
   const remove = () => {
-    props.remove(props.todo.id);
+    props.remove(todo.id);
     navigate('/');
   };
 
   const contentBox = editing ? (
     <TodoEditor tmpContent={tmpContent} onChange={setTmpContent} />
   ) : (
-    <TodoContent content={props.todo.content} />
+    <TodoContent content={todo.content} />
   );
   const editOrSaveButton = editing ? (
     <>
@@ -61,7 +61,7 @@ const TodoItem = (props: TodoItemProps) => {
       <UndoButton
         onClick={() => {
           toggleEditing();
-          setTmpContent(props.todo.content);
+          setTmpContent(todo.content);
         }}
       />
     </>
@@ -73,12 +73,12 @@ const TodoItem = (props: TodoItemProps) => {
     <div className='p-2 mb-2 border border-1 rounded-3'>
       <div className='d-flex align-items-start gap-2 mb-2'>
         <div className='align-self-center pe-2'>
-          <LinkTodo todoId={props.todo.id}>{props.todo.id}</LinkTodo>
+          <LinkTodo todoId={todo.id}>{todo.id}</LinkTodo>
         </div>
 
         <div className='flex-grow-1 align-self-center'>
-          <LinkTodo tabIndex={-1} todoId={props.todo.id}>
-            {props.todo.date.toLocaleString()}
+          <LinkTodo tabIndex={-1} todoId={todo.id}>
+            {todo.date.toLocaleString()}
           </LinkTodo>
         </div>
 

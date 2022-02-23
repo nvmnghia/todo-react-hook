@@ -12,18 +12,18 @@ interface DetailTodoProps {
 const truncate = (str: string, len = 25) =>
   str.length <= len ? str : `${str.substring(0, len - 1)}...`;
 
-export default function DetailTodo(props: DetailTodoProps) {
+export default function DetailTodo({ todo, remove, edit }: DetailTodoProps) {
   useEffect(() => {
-    document.title = `#${props.todo.id}: ${truncate(props.todo.content)}`;
+    document.title = `#${todo.id}: ${truncate(todo.content)}`;
   }, []);
 
   return (
     <>
       <div className='row mt-4'>
-        <h3>Todo #{props.todo.id}</h3>
+        <h3>Todo #{todo.id}</h3>
       </div>
 
-      <TodoItem todo={props.todo} remove={props.remove} edit={props.edit} />
+      <TodoItem todo={todo} remove={remove} edit={edit} />
     </>
   );
 }

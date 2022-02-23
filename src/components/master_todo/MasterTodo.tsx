@@ -6,9 +6,9 @@ import TodoList from './todo_list/TodoList';
 
 interface MasterTodoProps {
   todos: Todo[];
-  addTodo: (content: string) => void;
-  removeTodo: (id: number) => void;
-  editTodo: (id: number, content: string) => void;
+  add: (content: string) => void;
+  remove: (id: number) => void;
+  edit: (id: number, content: string) => void;
 }
 
 export default function MasterTodo(props: MasterTodoProps) {
@@ -23,13 +23,9 @@ export default function MasterTodo(props: MasterTodoProps) {
         <h2>TODO</h2>
       </div>
 
-      <AddTodo add={props.addTodo} />
+      <AddTodo add={props.add} />
 
-      <TodoList
-        todos={props.todos}
-        remove={props.removeTodo}
-        edit={props.editTodo}
-      />
+      <TodoList todos={props.todos} remove={props.remove} edit={props.edit} />
     </>
   );
 }

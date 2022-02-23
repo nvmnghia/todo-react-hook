@@ -47,9 +47,9 @@ export default function App() {
   const masterTodo = (
     <MasterTodo
       todos={todos}
-      addTodo={addTodo}
-      removeTodo={removeTodo}
-      editTodo={editTodo}
+      add={addTodo}
+      remove={removeTodo}
+      edit={editTodo}
     />
   );
 
