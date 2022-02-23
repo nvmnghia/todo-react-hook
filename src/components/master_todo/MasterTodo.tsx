@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import AddTodo from './add_todo/AddTodo';
 import Todo from '../../Todo';
@@ -12,6 +12,11 @@ interface MasterTodoProps {
 }
 
 export default function MasterTodo(props: MasterTodoProps) {
+  const numOfTodos = props.todos.length;
+  useEffect(() => {
+    document.title = numOfTodos == 0 ? 'All done' : `${numOfTodos} todos left`;
+  }, [numOfTodos]);
+
   return (
     <>
       <div className='row mt-4'>
