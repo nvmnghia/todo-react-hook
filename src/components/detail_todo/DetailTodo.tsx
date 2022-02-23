@@ -3,14 +3,14 @@ import React, { useEffect } from 'react';
 import Todo from '../../Todo';
 import TodoItem from '../master_todo/todo_list/todo_item/TodoItem';
 
+const truncate = (str: string, len = 25) =>
+  str.length <= len ? str : `${str.substring(0, len - 1)}...`;
+
 interface DetailTodoProps {
   todo: Todo;
   remove: (id: number) => void;
   edit: (id: number, content: string) => void;
 }
-
-const truncate = (str: string, len = 25) =>
-  str.length <= len ? str : `${str.substring(0, len - 1)}...`;
 
 export default function DetailTodo({ todo, remove, edit }: DetailTodoProps) {
   useEffect(() => {

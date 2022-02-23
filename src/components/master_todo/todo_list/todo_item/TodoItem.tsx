@@ -12,9 +12,9 @@ import { TodoContent, TodoEditor } from './TodoItemContent';
 
 type LinkTodoProps = { todoId: number } & Omit<LinkProps, 'to'>;
 
-const LinkTodo = ({ todoId, ...props }: LinkTodoProps) => (
+const LinkTodo = ({ todoId, children, ...props }: LinkTodoProps) => (
   <Link className='text-muted' to={`/todo/${todoId}`} {...props}>
-    {props.children}
+    {children}
   </Link>
 );
 
