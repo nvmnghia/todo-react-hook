@@ -29,11 +29,10 @@ export default function App() {
     setTodos((prevTodos) => prevTodos.filter((todo) => todo.id !== id));
   };
   const editTodo = (id: number, content: string) => {
-    setTodos((prevTodos) =>
-      prevTodos.map((todo) =>
-        todo.id === id ? { id, content, date: new Date() } : todo
-      )
-    );
+    setTodos((prevTodos) => [
+      { id, content, date: new Date() },
+      ...prevTodos.filter((todo) => todo.id !== id),
+    ]);
   };
 
   // Links
