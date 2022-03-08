@@ -27,15 +27,15 @@ export default function App() {
     const newTodo = todoFromContent(content);
     setTodos((prevTodos) => [newTodo, ...prevTodos]);
   }, []);
-  const removeTodo = (id: number) => {
+  const removeTodo = useCallback((id: number) => {
     setTodos((prevTodos) => prevTodos.filter((todo) => todo.id !== id));
-  };
-  const editTodo = (id: number, content: string) => {
+  }, []);
+  const editTodo = useCallback((id: number, content: string) => {
     setTodos((prevTodos) => [
       { id, content, date: new Date() },
       ...prevTodos.filter((todo) => todo.id !== id),
     ]);
-  };
+  }, []);
 
   // Links
   const links = todos.map((todo) => (

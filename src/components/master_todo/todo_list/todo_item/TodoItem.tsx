@@ -27,7 +27,7 @@ interface TodoItemProps {
   edit: (id: number, content: string) => void;
 }
 
-const TodoItem = ({ todo, ...props }: TodoItemProps) => {
+function TodoItemFunc({ todo, ...props }: TodoItemProps) {
   console.log(`Render <TodoItem id=${todo.id}>`);
 
   const navigate = useNavigate();
@@ -91,6 +91,16 @@ const TodoItem = ({ todo, ...props }: TodoItemProps) => {
       {contentBox}
     </div>
   );
-};
+}
 
+function areEqual(prev: TodoItemProps, next: TodoItemProps): boolean {
+  const equal =
+    prev.todo === next.todo &&
+    prev.edit === next.edit &&
+    prev.remove === next.remove;
+  console.log(equal ? 'EQUAL' : 'NOT EQUAL');
+  return equal;
+}
+
+const TodoItem = React.memo(TodoItemFunc, areEqual);
 export default TodoItem;
