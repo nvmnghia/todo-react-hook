@@ -10,6 +10,8 @@ import NotFound from './components/not_found/NotFound';
 import AppOutlet from './components/app_outlet/AppOutlet';
 
 export default function App() {
+  console.log('Render <App>');
+
   // State setup
   const [todos, setTodos] = useState<Todo[]>([]);
   useEffect(() => {

@@ -43,6 +43,8 @@ const DEFAULT = {
 };
 
 export default function AddTodo({ add }: AddTodoProps) {
+  console.log('Render <AddTodo>');
+
   const [content, setContent] = useState(DEFAULT.content);
   const [validationResult, setValidationResult] = useState<ValidationResult>(
     DEFAULT.validationResult

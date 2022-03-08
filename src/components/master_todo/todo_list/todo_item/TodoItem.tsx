@@ -28,6 +28,8 @@ interface TodoItemProps {
 }
 
 const TodoItem = ({ todo, ...props }: TodoItemProps) => {
+  console.log(`Render <TodoItem id=${todo.id}>`);
+
   const navigate = useNavigate();
 
   // Editing state: toggles textarea and changes buttons

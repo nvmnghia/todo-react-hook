@@ -13,6 +13,8 @@ interface DetailTodoProps {
 }
 
 export default function DetailTodo({ todo, remove, edit }: DetailTodoProps) {
+  console.log(`Render <DetailTodo id=${todo.id}>`);
+
   useEffect(() => {
     document.title = `#${todo.id}: ${truncate(todo.content)}`;
   }, []);

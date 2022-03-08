@@ -12,6 +12,8 @@ interface MasterTodoProps {
 }
 
 export default function MasterTodo(props: MasterTodoProps) {
+  console.log('Render <MasterTodo>');
+
   const numOfTodos = props.todos.length;
   useEffect(() => {
     document.title = numOfTodos === 0 ? 'All done' : `${numOfTodos} todos left`;
