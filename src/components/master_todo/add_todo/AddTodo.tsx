@@ -42,7 +42,7 @@ const DEFAULT = {
   validationResult: { valid: undefined as ValidationState, msg: '' },
 };
 
-export default function AddTodo({ add }: AddTodoProps) {
+function AddTodoFunc({ add }: AddTodoProps) {
   console.log('Render <AddTodo>');
 
   const [content, setContent] = useState(DEFAULT.content);
@@ -115,3 +115,6 @@ export default function AddTodo({ add }: AddTodoProps) {
     </form>
   );
 }
+
+const AddTodo = React.memo(AddTodoFunc);
+export default AddTodo;
